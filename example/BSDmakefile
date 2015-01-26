@@ -1,0 +1,16 @@
+all: cows
+
+# Pmake / BSD make-style shell and substitution
+# https://www.freebsd.org/doc/en_US.ISO8859-1/books/pmake/modyvarex.html
+COWTXT != ls -1 *.txt
+COWS=${COWTXT:S/.txt/.figcow/}
+
+.SUFFIXES: .figcow .txt
+
+.txt.figcow:
+	figlet < $< | cowsay -n > $@
+
+cows: ${COWS}
+
+clean:
+	rm -f *.figcow
